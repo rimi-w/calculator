@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div id="container" class="flex">
+        <div class="calculator-container flex">
+            <div class="top-buttons flex">
+                <button class="top-button red"></button>
+                <input type="range" value="1" min="0.5" max="1" step="0.01" class="top-button" id="transparency">
+            </div>
+            <div class="display flex">0</div>
+            <div class="buttons flex">
+                <button class="button function">C</button>
+                <button class="button function">±</button>
+                <button class="button function">%</button>
+                <button class="button operator">÷</button>
+                <button class="button number">7</button>
+                <button class="button number">8</button>
+                <button class="button number">9</button>
+                <button class="button operator">×</button>
+                <button class="button number">4</button>
+                <button class="button number">5</button>
+                <button class="button number">6</button>
+                <button class="button operator">−</button>
+                <button class="button number">1</button>
+                <button class="button number">2</button>
+                <button class="button number">3</button>
+                <button class="button operator">+</button>
+                <button class="button number zero">0</button>
+                <button class="button">.</button>
+                <button class="button">=</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
