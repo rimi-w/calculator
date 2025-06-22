@@ -18,7 +18,7 @@ for (let i=0; i<button.length; i++) {
         
         // 클래스가 number인 경우
         if (button[i].classList.contains(`number`)){
-            if (operator === null && firstOperand === ``) {
+            if (operator === null && (firstOperand === `` || firstOperand === `0`)) {
                 Number(display.textContent) === 0 ? 
                 display.textContent = btns[i] : 
                 display.textContent += btns[i];
@@ -100,11 +100,10 @@ const hasDot = function() {
 }
 
 const calculate = function (num1, num2) {
-    if (operator === null && firstOperand === ``) {
+    if (operator === null ) {
         firstOperand = display.textContent;
         display.textContent = firstOperand;
-    } else if (operator === null) {
-        display.textContent = num1;
+        secondOperand = ``;
     } else {
         switch (operator) {
             case `÷` : {
