@@ -1,53 +1,49 @@
-const button = document.getElementsByClassName(`button`);
+const button = document.querySelectorAll(`.button`);
 const display = document.querySelector(`.display`);
 const red = document.querySelector(`.red`);
 const transparency = document.getElementById(`transparency`);
 const container = document.getElementById(`container`); 
 
-const btns = []; // button의 텍스트 요소로 가지는 배열을 생성
-for (let i=0; i<button.length; i++) {
-    btns.push(button[i].textContent);
-}
-
 let firstOperand = ``;
 let secondOperand = ``;
 let operator = null;
 
-for (let i=0; i<button.length; i++) {
-    button[i].addEventListener(`click`,()=> {
-        
+button.forEach(button => {
+    button.addEventListener(`click`, () => {
+
+        let btnText = button.textContent;
         // 클래스가 number인 경우
-        if (button[i].classList.contains(`number`)){
-            if (operator === null && (firstOperand === `` || firstOperand === `0`)) {
+        if (button.classList.contains(`number`)){
+            if (operator === null && firstOperand === ``) {
                 Number(display.textContent) === 0 ? 
-                display.textContent = btns[i] : 
-                display.textContent += btns[i];
+                display.textContent = btnText : 
+                display.textContent += btnText;
             } else {
-                secondOperand += btns[i];
+                secondOperand += btnText;
                 display.textContent = secondOperand ;
             }
-            console.log(btns[i]); // 숫자 클릭시 콘솔창에 출력
-        } 
-        
+            console.log(button); // 숫자 클릭시 콘솔창에 출력
+        }
+
         // 클래스가 operator인 경우
-        else if (button[i].classList.contains(`operator`)){
+        else if (button.classList.contains(`operator`)){
             if (operator === null) {
                 firstOperand = display.textContent; // 첫번째 숫자 기억
-                operator = button[i].textContent ; // 연산기호 기억
+                operator = btnText ; // 연산기호 기억
                 secondOperand = ``;
                 console.log (`firstOperand : ${firstOperand}, operator : ${operator}`);
             } else if (operator !== null || firstOperand === null) {
                 secondOperand = display.textContent ;
                 calculate(Number(firstOperand),Number(secondOperand));
-                operator = button[i].textContent;
+                operator = btnText;
                 secondOperand = ``;
                 console.log (`firstOperand : ${firstOperand}, operator : ${operator}`);
             }
-        } 
-        
+        }
+
         // 클래스가 function인 경우
-        else if (button[i].classList.contains(`function`)){
-            switch (button[i].textContent) {
+        else if (button.classList.contains(`function`)){
+            switch (btnText) {
                 case `C` : {
                     firstOperand = ``;
                     secondOperand = ``;
@@ -61,11 +57,10 @@ for (let i=0; i<button.length; i++) {
                     percentFunc();
                 } break;
             }
-        } 
-        
-        // 그 외 (. , =)
+        }
+
         else {
-            switch (button[i].textContent) {
+            switch (btnText) {
                 case `.` : {
                     hasDot();
                 } break;
@@ -75,16 +70,11 @@ for (let i=0; i<button.length; i++) {
             }
         }
     })
-}
+})
 
 const changeAbs = function () {
-    if (operator === null) {
-        display.textContent *= (-1);
-        firstOperand = display.textContent;
-    } else {
-        display.textContent *= (-1);
-        secondOperand = display.textContent;
-    }
+    display.textContent *= (-1);
+    secondOperand = display.textContent;
 }
 
 const hasDot = function() {
@@ -100,7 +90,10 @@ const hasDot = function() {
 }
 
 const calculate = function (num1, num2) {
-    if (operator === null ) {
+    if (operator === null && firstOperand === ``) {
+        firstOperand = display.textContent;
+        display.textContent = firstOperand;
+    } else if (operator === null) {
         firstOperand = display.textContent;
         display.textContent = firstOperand;
         secondOperand = ``;
@@ -111,7 +104,7 @@ const calculate = function (num1, num2) {
                     display.textContent = `ERR : 0으로 나눌 수 없습니다.`;
                     console.log(`ERROR : 0으로 나눌 수 없습니다.`);
                 } else {
-                    num1 /= num2;
+                    num1 = (num1 / num2).toFixed(2);
                     display.textContent = num1;
                     secondOperand = ``;
                     firstOperand = num1;
@@ -163,7 +156,7 @@ const percentFunc = function () {
         secondOperand = firstOperand * (secondOperand / 100);
     } else {
         firstOperand = display.textContent;
-        operator = `%`; // 이것때문에 NaN이 생김.
+        operator = `%`;
         secondOperand = ``;
         console.log(firstOperand);
     }
